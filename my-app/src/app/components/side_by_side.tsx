@@ -1,11 +1,42 @@
-import React from 'react';
+"use client"; // Ensure this is a client-side component
+
+import React, { useEffect, useState } from 'react';
 
 export default function Side() {
+  const [imagePair, setImagePair] = useState(null);
+  const [rando, setRando] = useState(1); 
+  const [count, setCount] = useState(0); // dummy variable used to trigger useEffect 
+
+  function randomNumber(): number {
+    return Math.floor(Math.random() * 33);
+  }
+
+  useEffect(() => {
+    fetch('http://localhost:6969/api/getImagePair')
+      .then((response) => response.json())
+      .then((data) => {setImagePair(data); setRando(randomNumber());})
+      .catch((error) => console.error('Error fetching data:', error));
+  }, [count]);
+
+  if (!imagePair) {
+    return <p className='text-2xl'>Loading...</p>;
+  }
+
   return (
-    <div className="flex items-center justify-center">
-      <img src="/cat_two.png" className="w-72 h-48 mr-4" alt="Cat Two" />
-      <p className="mx-4 text-2xl">or</p>
-      <img src="/cat_one.jpg" className="w-72 h-72 ml-4" alt="Cat One" />
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {rando % 2 == 0 ? (
+        <>
+          <img src={imagePair.aiImageUrl} style={{ width: '30%', height: '30%' }} alt="AI Generated" onClick={() => setCount(count+1)}/>
+          <p style={{ margin: '0 16px', fontSize: '2rem' }}>or</p>
+          <img src={imagePair.realImageUrl} style={{ width: '30%', height: '30%' }} alt="Real" onClick={() => setCount(count+1)} />
+        </>
+      ) : (
+        <>
+          <img src={imagePair.realImageUrl} style={{ width: '30%', height: '30%' }} alt="Real" onClick={() => setCount(count+1)} />
+          <p style={{ margin: '0 16px', fontSize: '2rem' }}>or</p>
+          <img src={imagePair.aiImageUrl} style={{ width: '30%', height: '30%' }} alt="AI Generated" onClick={() => setCount(count+1)} />
+        </>
+      )}
     </div>
   );
 }

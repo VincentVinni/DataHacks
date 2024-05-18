@@ -41,20 +41,6 @@ const getImagePair = async (req: Request, res: Response) => {
   }
 };
 
-// const getAiImage = async (num: number, req: Request, res: Response) => {
-//   const imageUrl = await getImageFromBucket('ai-images', num, req, res);
-//   if (imageUrl) {
-//     res.send(imageUrl);
-//   }
-// };
-
-// const getRealImage = async (num: number, req: Request, res: Response) => {
-//   const imageUrl = await getImageFromBucket('real-images', num, req, res);
-//   if (imageUrl) {
-//     res.send(imageUrl);
-//   }
-// };
-
 module.exports = { 
   getImageFromBucket,
   getImagePair
