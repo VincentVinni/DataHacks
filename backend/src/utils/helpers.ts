@@ -11,7 +11,7 @@ const getBucketSize = async (bucketId: string) => {
     }
   } catch (error) {
     console.log("An expected error occurred")
-    return
+    return null
   }
 }
 
