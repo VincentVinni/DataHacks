@@ -29,8 +29,6 @@ const getImagePair = async (req: Request, res: Response) => {
     const randomNumber = getRandomNumber(bucketsize)
     const aiImageUrl = await getImageFromBucket('ai-images', randomNumber, req, res);
     const realImageUrl = await getImageFromBucket('real-images', randomNumber, req, res);
-    const bucketList = await helpers.getBucketList('ai-images')
-    console.log(bucketList)
     if (aiImageUrl && realImageUrl) {
       res.send({ aiImageUrl, realImageUrl });
     } else {
