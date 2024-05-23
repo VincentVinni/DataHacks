@@ -21,16 +21,16 @@ const Navbar: React.FC = () => {
             <NavigationMenu className='ml-auto mr-20'>
             <NavigationMenuList className='flex flex-row space-x-4'>
                 <NavigationMenuItem>
-                    photos
+                    <Link href="/">photos</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    chat
+                    <Link href="/chat">chat</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     leaderboard
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    github
+                    <a href="https://github.com/VincentVinni/DataHacks">github</a>
                 </NavigationMenuItem>
             </NavigationMenuList>
             </NavigationMenu>

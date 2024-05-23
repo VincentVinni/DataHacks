@@ -144,11 +144,38 @@ const updateScore = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error });
   }
-};
+}
+
+const getConversations = async (req: Request, res: Response) => {
+  const {data , error} = await supabase
+    .from('Conversations')
+    .select('*')
+  
+    if (error) {
+      console.error('Error loading data:', error);
+    } else {
+      res.status(200).json(data);  
+    }
+}
+
+const uploadConversation = async (req: Request, res: Response) => {
+  const {error} = await supabase
+    .from('Conversations')
+    .insert({created_at: new Date(), conversationID: 1, sender: req.body.sender, message: req.body.message})
+  
+  if (error) {
+    console.error('Error loading data: ', error); 
+  } else {
+    console.log("Successfully recorded to database: ", req.body.message);
+    res.status(200).send('Success!');
+  }
+}
 
 module.exports = { 
   getImagePair,
   populateDB,
   getLeaderboard,
-  updateScore
+  updateScore,
+  getConversations, 
+  uploadConversation
 }
