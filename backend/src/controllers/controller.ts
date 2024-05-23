@@ -91,7 +91,7 @@ const getLeaderboard = async (req: Request, res: Response) => {
       .from('ai-images')
       .select('url, score_count')
       .order('score_count', { ascending: false })
-      .limit(15)
+      .limit(10)
 
     if (error) {
       throw error
