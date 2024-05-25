@@ -25,7 +25,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to CS Gang's Server");
 });
 
-app.get("/testAI", async (req: Request, res: Response) => {
+app.put("/testAI", async (req: Request, res: Response) => {
 
   const createDocument = (content: string, metadata?: { [key: string]: any }): Document => {
     return new Document({pageContent: content});
