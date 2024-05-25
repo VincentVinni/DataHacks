@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Message from '../components/message';
 import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton"
+import { PulseLoader } from 'react-spinners';
 
 
 interface MessageProps {
@@ -13,7 +14,7 @@ interface MessageProps {
 }
 
 const Chat: React.FC = () => {
-  const [loading, setLoading] = useState<Boolean>(true); 
+  const [loading, setLoading] = useState<Boolean>(false); 
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<MessageProps[]>([
     { message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", isHuman: false },
@@ -32,7 +33,7 @@ const Chat: React.FC = () => {
       const userMessage = { message, isHuman: true };
       setMessages((prevMessages) => [...prevMessages, userMessage]);
       setMessage(''); // Clear the textarea
-
+      setLoading(true)
       try {
         const ai_payload = { "message": message }
         const db_payload = { "sender": "human", "message": message }
@@ -85,6 +86,7 @@ const Chat: React.FC = () => {
         }
 
         setMessages((prevMessages) => [...prevMessages, { message: testAIData, isHuman: false }]);
+        setLoading(false)
       } catch (error) {
         console.error("Error: ", error); 
       }
@@ -92,7 +94,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen p-4 overflow-hidden">
+    <div className="flex flex-col h-full p-4 overflow-hidden">
       <div className="flex-1 overflow-y-auto p-4 rounded-lg shadow-lg">
         <div className="flex flex-col space-y-4 special_class">
           {messages.map((msg, index) => (
@@ -102,7 +104,7 @@ const Chat: React.FC = () => {
           ))}
 
           {loading ? (
-            <Skeleton className="w-[100px] h-[20px] rounded-full" />
+            <Message message={<PulseLoader color='#2F2F2F'/>} isHuman={false}/>
             ) : (<></>)
           }
 
@@ -111,7 +113,7 @@ const Chat: React.FC = () => {
 
       <div className="grid justify-items-center">
         <Textarea 
-          className="bg-black w-1/3" 
+          className="bg-black w-1/3 p-2 fixed bottom-5 resize-none" 
           placeholder="Type your message here." 
           value={message} 
           onChange={handleChange} 

@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from 'react';
 
 interface MessageProps {
-  message: string;
+  message: string | JSX.Element;
   isHuman: boolean;
 }
 
